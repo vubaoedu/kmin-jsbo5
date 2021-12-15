@@ -1,0 +1,24 @@
+<html>
+  <head>
+    <style>
+      canvas {
+        border: 1px solid black;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="canvas" width="400" height="450"></canvas>
+  </body>
+  <script>
+    window.onload = function () {
+      var c = document.getElementById("canvas");
+      var ctx = c.getContext("2d");
+
+      ctx.fillStyle = "red";
+      ctx.fillRect(0, 0, 400, 100);
+
+      ctx.fillStyle = "#fcbf16";
+      ctx.fillRect(0, 100, 400, 50);
+    };
+  </script>
+</html>
