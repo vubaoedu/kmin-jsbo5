@@ -1,0 +1,152 @@
+<html>
+
+<head>
+    <style>
+        canvas {
+            border: 1px solid black;
+        }
+
+        canvas,
+        input,
+        button {
+            display: block;
+            margin: auto;
+        }
+
+        div {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="canvasContainer"></div>
+    <div id="inputContainer"></div>
+    <div id="submitContainer"></div>
+</body>
+<script>
+   game();
+
+    function game() {
+        var luot = 1;
+        luotMoi(luot);
+    }
+
+    function luotMoi(luot) {
+        var canvas = taoCanvas(luot);
+        var danhsach = taoDanhSachSoNgauNhien(luot);
+        hienThiDanhSachSoNgauNhien(canvas, danhsach);
+        hienThiTextInput(luot);
+        var submitBtn = taoNutSubmit();
+        setTimeout(function() {
+            anDanhSachSoNgauNhien(canvas, luot);
+            submitBtn.onclick = function () {
+                kiemTraKetQua(danhsach, luot);
+            };
+        }, luot * 1000);
+    }
+
+    function taoCanvas(n) {
+        var canvasContainer = document.getElementById("canvasContainer");
+        canvasContainer.innerHTML = "";
+        var canvas = document.createElement("CANVAS");
+        canvas.setAttribute("width", "400");
+        canvas.setAttribute("height", (200 + n * 50).toString());
+        canvas.setAttribute("id", "gameCanvas");
+        canvasContainer.appendChild(canvas);
+
+        var ctx = canvas.getContext("2d");
+        ctx.fillStyle = "yellow";
+        ctx.fillRect(0, 0, 400, 100);
+
+        ctx.font = "30px Arial";
+        ctx.fillStyle = "black";
+        ctx.textAlign = "center";
+        ctx.fillText("Game Thu Tai Tri Nho", 200, 50);
+
+        ctx.fillStyle = "green";
+        ctx.fillRect(0, 100, 400, 100);
+
+        ctx.font = "20px Arial";
+        ctx.fillStyle = "yellow";
+        ctx.fillText("Luot choi " + n, 200, 150);
+
+        return canvas;
+    }
+
+    function taoDanhSachSoNgauNhien(n) {
+        // Them code tao danh sach so ngau nhien va tra ve
+    }
+
+    function hienThiDanhSachSoNgauNhien(canvas, danhsach) {
+        // Them code ve danh sach so ngau nhien len canvas
+    }
+
+    function anDanhSachSoNgauNhien(canvas) {
+        // Xoa danh sach so ngau nhien duoc ve tren canvas
+    }
+
+    function hienThiTextInput(n) {
+        var txtInputContainer = document.getElementById("inputContainer");
+        txtInputContainer.innerHTML = "";
+        for (var i = n; i > 0; i--) {
+            var txtInput = document.createElement("input");
+            txtInput.setAttribute("type", "text");
+            txtInput.className = "answer";
+            txtInputContainer.appendChild(txtInput);
+        }
+    }
+
+    function anTextInput() {
+        var txtInputList = document.getElementsByClassName("answer");
+        txtInputList.forEach(function (element) {
+            element.remove();
+        });
+    }
+
+    function taoNutSubmit() {
+        var submitContainer = document.getElementById("submitContainer");
+        submitContainer.innerHTML = "";
+        var submitBtn = document.createElement("button");
+        submitBtn.setAttribute("id", "submitBtn");
+        submitBtn.innerText = "Submit";
+        submitContainer.appendChild(submitBtn);
+        return submitBtn;
+    }
+
+    function kiemTraKetQua(debai, luot) {
+        debai.sort(function (a, b) {
+            return a - b;
+        })
+        var dapan = [];
+        var txtInputList = document.getElementsByClassName("answer");
+        for (var i = 0; i < txtInputList.length; i++) {
+            dapan.push(parseInt(txtInputList[i].value));
+        }
+        dapan.sort(function (a, b) {
+            return a - b;
+        });
+        if (debai.length == dapan.length) {
+            for (var i = 0; i < debai.length; i++) {
+                if (debai[i] != dapan[i]) {
+                    ketThucGame();
+                    return;
+                }
+            }
+            luotMoi(luot + 1);
+            return;
+        }
+        ketThucGame();
+    }
+
+    function ketThucGame() {
+        var canvas = document.getElementById("gameCanvas");
+        anDanhSachSoNgauNhien(canvas);
+        var height = canvas.getAttribute("height");
+        ctx.textAlign = "center";
+        ctx.font = "20px Arial";
+        ctx.fillText("End game!", 200, 200 + (height - 200) / 2);
+    }
+</script>
+
+</html>
