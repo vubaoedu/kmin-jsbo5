@@ -3,7 +3,7 @@ function say() {
 }
 say();
 
-let sing = function() {
+let sing = function () {
     console.log("lalala");
 }
 sing();
