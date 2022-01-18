@@ -1,5 +1,5 @@
 function bai01() {
-  console.log("Hello world");
+  console.log("Hello worldd");
 }
 
 function bai02() {
